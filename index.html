@@ -24,7 +24,7 @@ header.top-header {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.75);
   padding: 1rem;
   text-align: center;
   z-index: 1000;
@@ -72,20 +72,28 @@ header.top-header h1 {
   text-shadow: 0 0 10px #ff0000;
 }
 
-/* ===================== Twitch Player ===================== */
-.twitch-wrapper {
-  max-width: 960px;
-  aspect-ratio: 16 / 9;
-  margin: 3rem auto;
-  box-shadow: 0 0 25px rgba(255,0,0,0.6);
-  border-radius: 10px;
-  overflow: hidden;
+/* ===================== Twitch Button ===================== */
+.twitch-link {
+  text-align: center;
+  margin: 3rem 0;
 }
 
-.twitch-wrapper iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+.twitch-link a {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: #9146FF;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(145,70,255,0.8);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.twitch-link a:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 40px rgba(145,70,255,1);
 }
 
 /* ===================== Footer ===================== */
@@ -136,13 +144,12 @@ footer {
   <p>Streamer & Content Creator</p>
 </section>
 
-<!-- ===================== Twitch Player ===================== -->
-<div class="twitch-wrapper">
-  <iframe
-    src="https://player.twitch.tv/?channel=thesouldragger&parent=cdpn.io&parent=codepen.io&parent=naveed-hafeez.github.io"
-    allowfullscreen>
-  </iframe>
-</div>
+<!-- ===================== Twitch Link ===================== -->
+<section class="twitch-link">
+  <a href="https://www.twitch.tv/thesouldragger" target="_blank">
+    🔴 Watch Live on Twitch
+  </a>
+</section>
 
 <!-- ===================== Footer ===================== -->
 <footer>
