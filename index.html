@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Soul Dragger Site</title>
+
+<!-- Font Awesome for social icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+/* ===================== General Styles ===================== */
+body {
+    margin: 0;
+    font-family: 'Orbitron', Arial, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* ===================== Header ===================== */
+header.top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    padding: 1rem 2rem;
+    text-align: center;
+    z-index: 1000;
+}
+
+header.top-header h1 {
+    font-size: 3rem;
+    color: #ff0000;
+    text-shadow: 
+        0 0 5px #ff0000,
+        0 0 10px #ff0000,
+        0 0 20px #ff0000,
+        0 0 40px #ff0000,
+        0 0 80px #ff0000;
+    animation: neonGlow 1.5s ease-in-out infinite alternate;
+    margin: 0;
+}
+
+@keyframes neonGlow {
+    0% {
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000;
+    }
+    100% {
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 60px #ff0000, 0 0 100px #ff0000;
+    }
+}
+
+/* ===================== Hero Section ===================== */
+.hero {
+    position: relative;
+    text-align: center;
+    padding: 9rem 2rem 4rem; /* extra top padding for fixed header */
+    overflow: hidden;
+    background-image: url('https://pbs.twimg.com/profile_banners/37470070/1698107747/1080x360');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6); /* dark overlay */
+    z-index: 1;
+}
+
+.hero p {
+    position: relative;
+    z-index: 2;
+    font-size: 1.4rem;
+    margin: 1rem 0 2rem;
+    color: #fff;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+/* ===================== Footer ===================== */
+footer {
+    text-align: center;
+    background: #111;
+    padding: 2rem;
+    color: #aaa;
+}
+
+footer a {
+    color: #1e90ff;
+    transition: 0.3s;
+}
+
+footer a:hover {
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+.social-links {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #1e90ff;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.social-links a:hover {
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+.social-links i {
+    font-size: 1.2rem;
+}
+
+/* ===================== Particle Canvas ===================== */
+canvas#particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0; /* behind hero text */
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width:768px){
+    header.top-header h1 {
+        font-size: 2rem;
+    }
+    .hero {
+        padding: 7rem 1rem 3rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .social-links a {
+        font-size: 0.9rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== Header ===================== -->
+<header class="top-header">
+    <h1>The Soul Dragger</h1>
+</header>
+
+<!-- ===================== Hero Section ===================== -->
+<section class="hero">
+    <canvas id="particles"></canvas>
+    <p>Retro Resident Evil & Fighting Games Fan — Streamer & Content Creator</p>
+</section>
+
+<!-- ===================== Footer ===================== -->
+<footer>
+    <p>Follow Soul Dragger:</p>
+    <div class="social-links">
+        <a href="https://www.youtube.com/c/TheSoulDragger" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://www.twitch.tv/thesouldragger" target="_blank"><i class="fab fa-twitch"></i> Twitch</a>
+        <a href="https://www.instagram.com/thesouldragger1" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://discord.gg/mrSanmn" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+        <a href="https://twitter.com/Bawaqar_Haider" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+    </div>
+    <p>© 2026 The Soul Dragger Site</p>
+</footer>
+
+<!-- ===================== Particles JS ===================== -->
+<script>
+// Canvas and particles setup
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particlesArray = [];
+const colors = ["#ff0000", "#ff4d4d", "#ff6666"];
+
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x > canvas.width) this.x = 0;
+        if(this.x < 0) this.x = canvas.width;
+        if(this.y > canvas.height) this.y = 0;
+        if(this.y < 0) this.y = canvas.height;
+    }
+    draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function init() {
+    for (let i = 0; i < 150; i++) particlesArray.push(new Particle());
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particlesArray.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+init();
+animate();
+</script>
+
+</body>
+</html>
