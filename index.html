@@ -168,32 +168,36 @@ particlesJS("particles-js", {
   }
 });
 
-/* ===================== Twitch Live Status ===================== */
-// Using Twitch API (no OAuth required for public streams)
-const clientId = "YOUR_CLIENT_ID"; // Replace with your Twitch Client ID
-const username = "thesouldragger"; // Twitch username
+/* ===================== Twitch Live Status Auto-refresh ===================== */
+// Twitch info (Frontend-safe workaround without OAuth)
+const username = "thesouldragger";
 const badge = document.getElementById("liveStatus");
 
-fetch(`https://api.twitch.tv/helix/streams?user_login=${username}`, {
-  headers: {
-    'Client-ID': clientId,
-    'Authorization': 'Bearer YOUR_OAUTH_TOKEN' // optional for public info if needed
-  }
-})
-.then(res => res.json())
-.then(data => {
-  if(data.data && data.data.length > 0) {
-    badge.textContent = "🔴 LIVE";
-    badge.style.background = "red";
-  } else {
+// Function to update live status every 30 seconds
+async function updateLiveStatus() {
+  try {
+    const response = await fetch(`https://decapi.me/twitch/uptime/${username}`);
+    const text = await response.text();
+
+    if (text.includes("offline")) {
+      badge.textContent = "⚪ OFFLINE";
+      badge.style.background = "gray";
+    } else {
+      badge.textContent = "🔴 LIVE";
+      badge.style.background = "red";
+    }
+  } catch (err) {
+    console.error(err);
     badge.textContent = "⚪ OFFLINE";
     badge.style.background = "gray";
   }
-})
-.catch(err => {
-  console.error(err);
-  badge.textContent = "⚪ OFFLINE";
-});
+}
+
+// Initial call
+updateLiveStatus();
+
+// Update every 30 seconds
+setInterval(updateLiveStatus, 30000);
 </script>
 
 </body>
