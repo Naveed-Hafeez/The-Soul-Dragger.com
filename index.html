@@ -37,7 +37,19 @@ header {
 header h1 {
   font-size: 3rem;
   color: #ff0000;
-  text-shadow: 0 0 20px #ff0000;
+  text-shadow:
+    0 0 5px #ff0000,
+    0 0 10px #ff0000,
+    0 0 20px #ff0000,
+    0 0 40px #ff0000,
+    0 0 80px #ff0000;
+  animation: neonPulse 1.0s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+  0% { text-shadow: 0 0 15px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000; }
+  50% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 60px #ff0000, 0 0 100px #ff0000; }
+  100% { text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000; }
 }
 
 /* ===================== Hero ===================== */
@@ -62,13 +74,20 @@ header h1 {
   z-index: 1;
 }
 
+/* ===================== Live Badge ===================== */
 .live-badge {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.4rem 1rem;
-  background: gray;
   border-radius: 20px;
   font-weight: bold;
+  animation: badgePulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes badgePulse {
+  0% { box-shadow: 0 0 5px gray; }
+  50% { box-shadow: 0 0 20px red; }
+  100% { box-shadow: 0 0 5px gray; }
 }
 
 /* ===================== Twitch Link ===================== */
@@ -82,6 +101,7 @@ header h1 {
   font-weight: bold;
   background: #9146FF;
   box-shadow: 0 0 20px rgba(145,70,255,0.8);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .twitch-link a:hover {
@@ -111,6 +131,8 @@ footer {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 1.1rem;
+  transition: 0.3s;
 }
 
 .social-links a:hover {
@@ -122,6 +144,7 @@ footer {
 @media (max-width: 768px) {
   header h1 { font-size: 2rem; }
   .twitch-link a { font-size: 0.9rem; padding: 0.8rem 2rem; }
+  .social-links a { font-size: 0.9rem; }
 }
 </style>
 </head>
@@ -139,7 +162,7 @@ footer {
 <!-- Hero -->
 <section class="hero">
   <p>Streamer & Content Creator</p>
-  <div id="liveStatus" class="live-badge">⚪ OFFLINE</div>
+  <div id="liveStatus" class="live-badge" style="background: gray;">⚪ OFFLINE</div>
   <div class="twitch-link">
     <a href="https://www.twitch.tv/thesouldragger" target="_blank">Watch on Twitch</a>
   </div>
@@ -168,12 +191,10 @@ particlesJS("particles-js", {
   }
 });
 
-/* ===================== Twitch Live Status Auto-refresh ===================== */
-// Twitch info (Frontend-safe workaround without OAuth)
+/* ===================== Twitch Live Status ===================== */
 const username = "thesouldragger";
 const badge = document.getElementById("liveStatus");
 
-// Function to update live status every 30 seconds
 async function updateLiveStatus() {
   try {
     const response = await fetch(`https://decapi.me/twitch/uptime/${username}`);
@@ -195,9 +216,7 @@ async function updateLiveStatus() {
 
 // Initial call
 updateLiveStatus();
-
-// Update every 30 seconds
-setInterval(updateLiveStatus, 30000);
+setInterval(updateLiveStatus, 30000); // update every 30s
 </script>
 
 </body>
