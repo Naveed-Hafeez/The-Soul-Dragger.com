@@ -8,6 +8,9 @@
 <!-- Font Awesome -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
+<!-- Particles.js -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
 <style>
 /* ===================== General ===================== */
 body {
@@ -18,41 +21,59 @@ body {
   overflow-x: hidden;
 }
 
-/* ===================== Header ===================== */
-header.top-header {
+/* ===================== Particles ===================== */
+#particles-js {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+/* ===================== Navigation ===================== */
+nav {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.85);
   padding: 1rem;
-  text-align: center;
   z-index: 1000;
 }
 
-header.top-header h1 {
-  font-size: 3rem;
-  color: #ff0000;
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
   margin: 0;
-  text-shadow:
-    0 0 5px #ff0000,
-    0 0 10px #ff0000,
-    0 0 20px #ff0000,
-    0 0 40px #ff0000,
-    0 0 80px #ff0000;
-  animation: neonGlow 1.5s infinite alternate;
+  padding: 0;
 }
 
-@keyframes neonGlow {
-  from { text-shadow: 0 0 5px #ff0000, 0 0 20px #ff0000; }
-  to   { text-shadow: 0 0 15px #ff0000, 0 0 60px #ff0000; }
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #ff0000;
+}
+
+/* ===================== Header ===================== */
+header {
+  padding-top: 5rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 3rem;
+  color: #ff0000;
+  text-shadow: 0 0 20px #ff0000;
 }
 
 /* ===================== Hero ===================== */
 .hero {
   position: relative;
   text-align: center;
-  padding: 9rem 2rem 4rem;
+  padding: 4rem 2rem;
   background-image: url('https://pbs.twimg.com/profile_banners/37470070/1698107747/1080x360');
   background-size: cover;
   background-position: center;
@@ -62,45 +83,36 @@ header.top-header h1 {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.65);
 }
 
-.hero p {
+.hero * {
   position: relative;
   z-index: 1;
-  font-size: 1.3rem;
-  text-shadow: 0 0 10px #ff0000;
 }
 
-/* ===================== Twitch Button ===================== */
 .twitch-link {
-  text-align: center;
-  margin: 3rem 0;
-}
-
-.twitch-link a {
   display: inline-block;
-  padding: 1rem 2.5rem;
+  margin-top: 1rem;
+  padding: 1rem 2rem;
   background: #9146FF;
   color: #fff;
-  font-size: 1.2rem;
   font-weight: bold;
   border-radius: 50px;
   text-decoration: none;
-  box-shadow: 0 0 20px rgba(145,70,255,0.8);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.twitch-link a:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 40px rgba(145,70,255,1);
+.twitch-link:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #9146FF;
 }
 
 /* ===================== Footer ===================== */
 footer {
-  text-align: center;
   background: #111;
   padding: 2rem;
+  text-align: center;
   color: #aaa;
 }
 
@@ -115,7 +127,7 @@ footer {
 .social-links a {
   color: #1e90ff;
   font-weight: bold;
-  transition: 0.3s;
+  text-decoration: none;
 }
 
 .social-links a:hover {
@@ -125,34 +137,40 @@ footer {
 
 /* ===================== Responsive ===================== */
 @media (max-width: 768px) {
-  header.top-header h1 { font-size: 2rem; }
-  .hero { padding: 7rem 1rem 3rem; }
-  .hero p { font-size: 1rem; }
+  header h1 { font-size: 2rem; }
+  nav ul { flex-wrap: wrap; gap: 1rem; }
+  .hero { padding: 3rem 1rem; }
+  .twitch-link { font-size: 0.9rem; padding: 0.8rem 1.5rem; }
 }
 </style>
 </head>
-
 <body>
 
-<!-- ===================== Header ===================== -->
-<header class="top-header">
+<!-- Particles -->
+<div id="particles-js"></div>
+
+<!-- Navigation -->
+<nav>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#watch">Watch</a></li>
+    <li><a href="#footer">Footer</a></li>
+  </ul>
+</nav>
+
+<!-- Header -->
+<header id="home">
   <h1>The Soul Dragger</h1>
 </header>
 
-<!-- ===================== Hero ===================== -->
+<!-- Hero -->
 <section class="hero">
   <p>Streamer & Content Creator</p>
+  <a class="twitch-link" href="https://www.twitch.tv/thesouldragger" target="_blank">Watch on Twitch</a>
 </section>
 
-<!-- ===================== Twitch Link ===================== -->
-<section class="twitch-link">
-  <a href="https://www.twitch.tv/thesouldragger" target="_blank">
-    🔴 Watch Live on Twitch
-  </a>
-</section>
-
-<!-- ===================== Footer ===================== -->
-<footer>
+<!-- Footer -->
+<footer id="footer">
   <p>Follow Soul Dragger:</p>
   <div class="social-links">
     <a href="https://www.youtube.com/c/TheSoulDragger" target="_blank">YouTube</a>
@@ -163,6 +181,19 @@ footer {
   </div>
   <p>© 2026 The Soul Dragger Site</p>
 </footer>
+
+<!-- ===================== Scripts ===================== -->
+<script>
+/* PARTICLES */
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 50 },
+    color: { value: "#ff0000" },
+    size: { value: 3 },
+    move: { speed: 1 }
+  }
+});
+</script>
 
 </body>
 </html>
